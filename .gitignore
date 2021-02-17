@@ -2,3 +2,4 @@
 *.tfvars
 secret.py
 my_key.py
+*.exe
