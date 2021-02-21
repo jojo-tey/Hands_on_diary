@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+
+# To modify in admin page, need to define here
+
+from .models import Question
+
+
+admin.site.register(Question)

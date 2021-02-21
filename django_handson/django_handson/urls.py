@@ -21,5 +21,7 @@ urlpatterns = [
     # view 호출을 위해 view.url에 연결
     # view -> view.url -> conf.url
     path('polls/', include('polls.urls')),
+    path('detail/', include('polls.urls')),
+    path('results/', include('polls.urls')),
 
 ]
