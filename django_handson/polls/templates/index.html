@@ -2,8 +2,21 @@
 <ul>
   {% for question in latest_question_list %}
   <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
+  <li>
+    <a href="{% url 'detail' question.id %}">{{ question.question_text }}</a>
+  </li>
+  <li>
+    <a href="{% url 'detail' question.id %}">{{ question.question_text }}</a>
+  </li>
   {% endfor %}
 </ul>
 {% else %}
 <p>No polls are available.</p>
 {% endif %}
+
+<p>
+  url 하드코딩시 수정이 어려움 <br />
+  url 연결시 좋은방법: polls.urls에서 정의해준 이름을 연결하고 속성값을 준다.
+  수정시 polls.url에서만 바꿔주면 되므로 간단함<br />
+  앱이 많아질 시 url을 좀더 정확히 명시해줌
+</p>
