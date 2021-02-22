@@ -3,6 +3,8 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
 from .models import Question, Choice
+from django.utils import timezone
+
 # Create your views here.
 
 # 클래스뷰(generic), 함수뷰(def)
@@ -15,23 +17,33 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return Question.objects.order_by('-pub_date')[:5]
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
 
 
 # ID를 통해 각 모델을 가져올 수 있음
 
 # id가 존재하지 않을경우 404 페이지 불러오는방법 두가지(Http404 & get_object_or_404)
-def detail(request, question_id):
-    try:
-        question = Question.objects.get(pk=question_id)
-    except Question.DoesNotExist:
-        raise Http404("Question does not exist")
-    return render(request, 'detail.html', {'question': question})
+class DetailView(generic.DetailView):
+    model = Question
+    template_name = 'detail.html'
+
+    def get_queryset(self):
+        """Excludes any questions that fren`t published yet"""
+        return Question.objects.filter(pub_date__lte=timezone.now())
+
+    # try:
+    #     question = Question.objects.get(pk=question_id)
+    # except Question.DoesNotExist:
+    #     raise Http404("Question does not exist")
+    # return render(request, 'detail.html', {'question': question})
 
 
-def results(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'results.html', {'question': question})
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name = 'detail.html'
+
+    # question = get_object_or_404(Question, pk=question_id)
+    # return render(request, 'results.html', {'question': question})
 
 
 def vote(request, question_id):
@@ -51,3 +63,6 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('results', args=(question.id,)))
+
+
+# Test on shell
