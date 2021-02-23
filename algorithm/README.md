@@ -188,3 +188,66 @@ def solution(numbers):
 
     return str(int("".join(nums)))
 ```
+
+## 나누어 떨어지는 숫자 배열
+
+array의 각 element 중 divisor로 나누어 떨어지는 값을 오름차순으로 정렬한 배열을 반환하는 함수, solution을 작성해주세요.
+divisor로 나누어 떨어지는 element가 하나도 없다면 배열에 -1을 담아 반환하세요.
+
+- arr은 자연수를 담은 배열입니다.
+- 정수 i, j에 대해 i ≠ j 이면 arr[i] ≠ arr[j] 입니다.
+- divisor는 자연수입니다.
+- array는 길이 1 이상인 배열입니다.
+
+```
+1.
+def solution(arr, divisor):
+    arr = sorted([x for x in arr if x % divisor == 0]);
+    return arr if len(arr) != 0 else [-1];
+
+
+
+22.
+def solution(arr, divisor): return sorted([n for n in arr if n%divisor == 0]) or [-1]
+```
+
+## 가장 작은 수 제거하기
+
+정수를 저장한 배열, arr 에서 가장 작은 수를 제거한 배열을 리턴하는 함수, solution을 완성해주세요. 단, 리턴하려는 배열이 빈 배열인 경우엔 배열에 -1을 채워 리턴하세요. 예를들어 arr이 [4,3,2,1]인 경우는 [4,3,2]를 리턴 하고, [10]면 [-1]을 리턴 합니다.
+
+- arr은 길이 1 이상인 배열입니다.
+- 인덱스 i, j에 대해 i ≠ j이면 arr[i] ≠ arr[j] 입니다.
+
+```
+1.
+def solution(arr):
+
+    if len(arr) > 1:
+        arr.remove(min(arr))
+        return arr
+    else:
+        return [-1]
+
+
+2.
+def rm_small(mylist):
+    return [i for i in mylist if i > min(mylist)]
+```
+
+## 자릿수 더하기
+
+자연수 N이 주어지면, N의 각 자릿수의 합을 구해서 return 하는 solution 함수를 만들어 주세요.
+예를들어 N = 123이면 1 + 2 + 3 = 6을 return 하면 됩니다.
+
+```
+1.
+def solution(n):
+    answer = 0
+    for i in str(n):
+        answer += int(i)
+    return answer
+
+2.
+def sum_digit(number):
+    return sum(map(int, str(number)))
+```
