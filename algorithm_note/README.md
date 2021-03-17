@@ -251,3 +251,106 @@ def solution(n):
 def sum_digit(number):
     return sum(map(int, str(number)))
 ```
+
+## 두개 뽑아서 더하기
+
+정수 배열 numbers가 주어집니다. numbers에서 서로 다른 인덱스에 있는 두 개의 수를 뽑아 더해서 만들 수 있는 모든 수를 배열에 오름차순으로 담아 return 하도록 solution 함수를 완성해주세요.
+
+- 입출력 예 
+
+numbers|result
+--------|--------
+[2,1,3,4,1]|[2,3,4,5,6,7]
+[5,0,2,7]|[2,5,7,9,12]
+
+
+- 중복제거를 위해 set() 사용 후 list로 리턴
+- 반복문을 통해 결과값을 add
+
+```py
+def solution(numbers):
+    answer = set()
+    
+    for i in range(len(numbers)):
+        for j in range(i+1, len(numbers)):
+            answer.add(numbers[i] + numbers[j])
+    result = list(answer)
+    result.sort()
+    return result
+```
+
+
+## 완주하지 못한 선수(해시)
+
+
+
+수많은 마라톤 선수들이 마라톤에 참여하였습니다. 단 한 명의 선수를 제외하고는 모든 선수가 마라톤을 완주하였습니다.
+
+마라톤에 참여한 선수들의 이름이 담긴 배열 participant와 완주한 선수들의 이름이 담긴 배열 completion이 주어질 때, 완주하지 못한 선수의 이름을 return 하도록 solution 함수를 작성해주세요.
+
+
+- 입출력 예
+
+participant | completion | return
+-----|-----|-----
+["leo", "kiki", "eden"]	| ["eden", "kiki"] | "leo"
+["marina", "josipa", "nikola", "vinko", "filipa"] | ["josipa", "filipa", "marina", "nikola"] | "vinko"
+["mislav", "stanko", "mislav", "ana"] | ["stanko", "ana", "mislav"] | "mislav"
+
+
+- 정렬 후 zip함수를 써서 비교
+- 중복되지 않은 하나(완주하지 못한 선수)를 반환
+
+또는
+
+- collections.Counter()는 리스트 원소의 갯수를 세서 dict 형태로 반환해준다. 
+- Counter 객체 끼리는 차집합 교집합 등 연산도 가능하다.
+
+
+
+```py
+def solution(participant, completion):
+    
+    participant.sort()
+    completion.sort()
+    
+    for k, v in zip(participant, completion):
+        if k != v:
+            return k
+        
+    return participant[-1]
+
+########
+
+import collections
+ 
+ 
+def solution(participant, completion):
+    answer = collections.Counter(participant) - collections.Counter(completion)
+    return list(answer.keys())[0]
+
+```
+
+
+
+## 신규아이디 추천
+
+카카오에 입사한 신입 개발자 네오는 "카카오계정개발팀"에 배치되어, 카카오 서비스에 가입하는 유저들의 아이디를 생성하는 업무를 담당하게 되었습니다. "네오"에게 주어진 첫 업무는 새로 가입하는 유저들이 카카오 아이디 규칙에 맞지 않는 아이디를 입력했을 때, 입력된 아이디와 유사하면서 규칙에 맞는 아이디를 추천해주는 프로그램을 개발하는 것입니다.
+다음은 카카오 아이디의 규칙입니다.
+
+아이디의 길이는 3자 이상 15자 이하여야 합니다.
+아이디는 알파벳 소문자, 숫자, 빼기(-), 밑줄(_), 마침표(.) 문자만 사용할 수 있습니다.
+단, 마침표(.)는 처음과 끝에 사용할 수 없으며 또한 연속으로 사용할 수 없습니다.
+"네오"는 다음과 같이 7단계의 순차적인 처리 과정을 통해 신규 유저가 입력한 아이디가 카카오 아이디 규칙에 맞는 지 검사하고 규칙에 맞지 않은 경우 규칙에 맞는 새로운 아이디를 추천해 주려고 합니다.
+신규 유저가 입력한 아이디가 new_id 라고 한다면,
+
+```
+1단계 new_id의 모든 대문자를 대응되는 소문자로 치환합니다.
+2단계 new_id에서 알파벳 소문자, 숫자, 빼기(-), 밑줄(_), 마침표(.)를 제외한 모든 문자를 제거합니다.
+3단계 new_id에서 마침표(.)가 2번 이상 연속된 부분을 하나의 마침표(.)로 치환합니다.
+4단계 new_id에서 마침표(.)가 처음이나 끝에 위치한다면 제거합니다.
+5단계 new_id가 빈 문자열이라면, new_id에 "a"를 대입합니다.
+6단계 new_id의 길이가 16자 이상이면, new_id의 첫 15개의 문자를 제외한 나머지 문자들을 모두 제거합니다.
+     만약 제거 후 마침표(.)가 new_id의 끝에 위치한다면 끝에 위치한 마침표(.) 문자를 제거합니다.
+7단계 new_id의 길이가 2자 이하라면, new_id의 마지막 문자를 new_id의 길이가 3이 될 때까지 반복해서 끝에 붙입니다.
+```
