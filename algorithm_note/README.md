@@ -417,8 +417,74 @@ def solution(new_id):
 
 ```
 
-
 ## 모의고사 (완전탐색)
 
+수학을 포기한 세사람은 모의고사에 수학 문제를 전부 찍으려 합니다. 세사람은 1번 문제부터 마지막 문제까지 다음과 같이 찍습니다.
+
+1번 : 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, ...
+2번 : 2, 1, 2, 3, 2, 4, 2, 5, 2, 1, 2, 3, 2, 4, 2, 5, ...
+3번 : 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, ...
+
+1번 문제부터 마지막 문제까지의 정답이 순서대로 들은 배열 answers가 주어졌을 때, 가장 많은 문제를 맞힌 사람이 누구인지 배열에 담아 return 하도록 solution 함수를 작성해주세요.
+
+### 입출력 예 
+answers	| return
+---- | ----
+[1,2,3,4,5] | [1]
+[1,3,2,4,2] | [1,2,3]
 
 
+1은 모든 문제를 맞혔습니다.
+2는 모든 문제를 틀렸습니다.
+3은 모든 문제를 틀렸습니다.
+따라서 가장 문제를 많이 맞힌 사람은 1입니다.
+
+```py
+def solution(answers):
+    result = []
+    
+    p1 = [1, 2, 3, 4, 5]
+    p2 = [2, 1, 2, 3, 2, 4, 2, 5]
+    p3 = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
+    count = [0, 0, 0]
+    
+    for i, answer in enumerate(answers):
+        if p1[i % 5] == answer:
+            count[0] += 1
+        if p2[i % 8] == answer:
+            count[1] += 1
+        if p2[i % 10] == answer:
+            count[2] += 1
+    
+    answer_temp = [count_p1, count_p2, count_p3]
+
+# 인덱스가 2개 필요한 경우 변수를 두개 설정
+# 예를들어 enumerate와 같이 써서 인덱스의 키값을 같이 반환
+# 아래 반복문 : 첫번째 인덱스의 스코어가 맥스이면 첫번째사람을 배열에 추가
+
+    for p, s in enumerate(count):
+        if s == max(count):
+            result.append(p+1)
+    
+    return result
+```
+
+## 문자열 내 마음대로 정렬하기
+
+문자열로 구성된 리스트 strings와, 정수 n이 주어졌을 때, 각 문자열의 인덱스 n번째 글자를 기준으로 오름차순 정렬하려 합니다. 예를 들어 strings가 ["sun", "bed", "car"]이고 n이 1이면 각 단어의 인덱스 1의 문자 "u", "e", "a"로 strings를 정렬합니다.
+
+### 입출력 예
+strings | n | return
+----|----
+["sun", "bed", "car"] | 1 |	["car", "bed", "sun"]
+["abce", "abcd", "cdx"]	| 2 | ["abcd", "abce", "cdx"]
+
+```py
+
+# 왜 sorted가 두번?
+
+def solution(strings, n):
+    answer = sorted(sorted(strings), key=lambda x: x[n])
+    return answer
+
+```

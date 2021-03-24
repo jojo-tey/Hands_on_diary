@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <form method="post" class="col s12 post-form">
+    {% csrf_token %}
+    
+      <div class="row form-group">
+        <div class="input-field col s6">
+          <i class="material-icons prefix">account_circle</i>
+          <input id="username" type="text" class="form-control" name="username" value="{{ form.username.value|default_if_none:'' }}">
+          <label for="username">ID</label>
+        </div>
+        <div class="input-field col s6">
+          <i class="material-icons prefix">email</i>
+          <input id="email" type="text" class="form-control" name="email" value="{{ form.email.value|default_if_none:'' }}">
+          <label for="email">Email</label>
+        </div>
+
+        <div class="input-field col s6">
+          <i class="material-icons prefix">https</i>
+          <input id="password1" type="password" class="form-control" name="password1" value="{{ form.password1.value|default_if_none:'' }}">
+          <label for="password1">PASSWORD</label>
+        </div>
+        <div class="input-field col s6">
+          <i class="material-icons prefix">https</i>
+          <input id="password2" type="password" class="form-control" name="password2" value="{{ form.password2.value|default_if_none:'' }}">
+          <label for="password2">REPEAT PASSWORD</label>
+        </div>
+      </div>
+      
+      {% if form.errors %}
+      <div class="row">
+        <div class="col s12">
+          <ul style="color:crimson;">
+          {% for field in form %}
+            
+            {% for error in field.errors %}  <!-- 필드 오류를 출력한다. -->
+              <li>
+                <strong>{{ field.label }}</strong>
+                {{ error }}
+              </li>
+            {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}   <!-- 넌필드 오류를 출력한다. -->
+            <li>
+                <strong>{{ error }}</strong>
+            </li>
+          {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="row">
+        <div class="col s6 offset-s5">
+          <button class="btn waves-effect waves-light" type="submit">CREATE ACCOUNT</button>
+        </div>
+      </div>
+      
+    </form>
+  </div>
+</div>
+{% endblock %}

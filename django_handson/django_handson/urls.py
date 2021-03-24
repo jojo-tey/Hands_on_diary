@@ -16,12 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from authy.views import index
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     # view 호출을 위해 view.url에 연결
     # view -> view.url -> conf.url
-    path('polls/', include('polls.urls')),
-    path('detail/', include('polls.urls')),
-    path('results/', include('polls.urls')),
 
+    path('user/', include('authy.urls')),
+    path('', include('authy.urls')),
+    path('', index, name='index'),
 ]
