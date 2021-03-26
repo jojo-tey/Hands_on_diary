@@ -25,6 +25,6 @@ urlpatterns = [
     # view -> view.url -> conf.url
 
     path('user/', include('authy.urls')),
-    path('', include('authy.urls')),
+    path('board/', include('board.urls')),
     path('', index, name='index'),
 ]

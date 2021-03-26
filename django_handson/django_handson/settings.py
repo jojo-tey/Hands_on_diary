@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # 'polls',
     # 커스텀앱 연결, polls.apps.PollsConfig 이런식으로 지정해줘도 됨
     'authy',
+    'board',
 ]
 
 MIDDLEWARE = [
